@@ -13,7 +13,7 @@ namespace Test_eTermini
         public void Test1()
         {
             Assert.Pass();
-/* Hello */
+/* maka */
         }
     }
 }
