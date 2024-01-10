@@ -1,0 +1,52 @@
+﻿@model eTermini.Models.MatchesEntity
+
+@{
+    ViewData["Title"] = "Manage Join Requests";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Use your layout file here
+}
+
+<h1>Manage Join Requests for Match: @Model.ID</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User ID
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model.JoinRequests)
+        {
+            <tr>
+                <td>
+                    @request.UserId
+                </td>
+                <td>
+                    @request.Status
+                </td>
+                <td>
+                    <!-- Accept and Reject buttons for each request -->
+                    @if (request.Status == "Pending")
+                    {
+                        <form asp-action="AcceptJoinRequest" asp-controller="Matches" method="post">
+                            <input type="hidden" name="RequestId" value="@request.Id" />
+                            <button type="submit">Accept</button>
+                        </form>
+
+                        <form asp-action="RejectJoinRequest" asp-controller="Matches" method="post">
+                            <input type="hidden" name="RequestId" value="@request.Id" />
+                            <button type="submit">Reject</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

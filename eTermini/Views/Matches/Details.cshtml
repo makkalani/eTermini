@@ -1,0 +1,62 @@
+﻿@model eTermini.Models.MatchesEntity
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    @*<h4>MatchesEntity</h4>*@
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OrganizerID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OrganizerID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LocationID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LocationID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlayerCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlayerCount)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
+    @* <a asp-action="JoinRequests" asp-controller="Matches" asp-route-id="@Model.ID">View Join Requests</a> *@
+    <a asp-controller="Matches" asp-action="ManageJoinRequests" asp-route-matchId="@Model.ID">Manage Join Requests</a>
+
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@if (Model.JoinRequests != null && Model.JoinRequests.Any())
+{
+    <div>
+        <h4>Accepted Players</h4>
+        <ul>
+            @foreach (var request in Model.JoinRequests.Where(jr => jr.Status == "Accepted"))
+            {
+                <li>@request.User.UserName</li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <p>No join requests found for this match.</p>
+}
